@@ -10,7 +10,6 @@ interface UrlShortenerService {
 
 @Service
 class UrlShortenerServiceImpl : UrlShortenerService {
-    override fun shortIt(url: LongUrl): ShortUrl {
-        TODO("Not yet implemented")
-    }
+    // FIXME: just a fake implementation
+    override fun shortIt(url: LongUrl): ShortUrl = ShortUrl(url.value.take(10))
 }
