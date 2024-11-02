@@ -6,7 +6,12 @@ Spring Boot Url shortener
 ## Directory structures & patterns
 DDD + Hexagonal
 
-
 ## TODO
-- [ ] 
-- [ ] 
+- [X] Create Domain classes
+- [X] Create Service
+- [ ] Create a proper URLShortener algorithm
+- [ ] Connect to DB
+- [ ] Expose REST endpoints
+- [ ] Manage possible duplicates
+- [ ] Add Metrics
+- [ ] Add Security
