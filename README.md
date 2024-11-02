@@ -13,5 +13,5 @@ DDD + Hexagonal
 - [X] Connect to DB
 - [X] Expose REST endpoints
 - [X] Manage possible duplicates
-- [ ] Add Metrics
+- [X] Add Metrics
 - [ ] Add Security

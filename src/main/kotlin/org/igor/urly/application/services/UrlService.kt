@@ -1,5 +1,7 @@
 package org.igor.urly.application.services
 
+import io.micrometer.core.instrument.Counter
+import io.micrometer.core.instrument.MeterRegistry
 import org.igor.urly.application.ports.outbound.persistence.DuplicateUrlException
 import org.igor.urly.application.ports.outbound.persistence.UrlRepository
 import org.igor.urly.domain.entities.NewUrlEntity
@@ -22,8 +24,14 @@ class UrlServiceImpl(
     private val urlShortenerService: UrlShortenerService,
     @Value("\${urly.shortener.max-collision-attempts:10}")
     private val maxCollisionAttempts: Int = 10,
+    meterRegistry: MeterRegistry,
 ) : UrlService {
     private val logger = LoggerFactory.getLogger(UrlServiceImpl::class.java)
+    private val collisionCounter =
+        Counter
+            .builder("collision")
+            .tags("shortener", urlShortenerService.javaClass.simpleName)
+            .register(meterRegistry)
 
     override fun save(longUrl: LongUrl): UrlEntity {
         var attempts = 0
@@ -36,6 +44,7 @@ class UrlServiceImpl(
             } catch (e: DuplicateUrlException) {
                 logger.warn("duplicate url: possible short url collision or already existent record", e)
                 attempts++
+                collisionCounter.increment()
             }
         } while (attempts < maxCollisionAttempts)
         error("Unable to save the url $longUrl, max attempts reached")

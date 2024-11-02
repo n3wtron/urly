@@ -1,5 +1,7 @@
 package org.igor.urly.application.services
 
+import io.micrometer.core.instrument.Counter
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
@@ -23,7 +25,8 @@ class UrlServiceImplTest {
     private val urlRepository: UrlRepository = mockk()
     private val urlShortenerService: UrlShortenerService = mockk()
     private val maxCollisionAttempts = 2
-    private val urlService = UrlServiceImpl(urlRepository, urlShortenerService, maxCollisionAttempts)
+    private val meterRegistry = SimpleMeterRegistry()
+    private val urlService = UrlServiceImpl(urlRepository, urlShortenerService, maxCollisionAttempts, meterRegistry)
 
     @AfterEach
     fun tearDown() {
@@ -96,6 +99,11 @@ class UrlServiceImplTest {
             urlShortenerService.shortIt(longUrl)
             urlRepository.save(any())
         }
+        expectThat(getCollisionCounter())
+            .isNotNull()
+            .get { this.count() }
+            .isEqualTo(1.0)
+
         // TODO check logs emission
     }
 
@@ -124,6 +132,10 @@ class UrlServiceImplTest {
             urlShortenerService.shortIt(longUrl)
             urlRepository.save(any())
         }
+        expectThat(getCollisionCounter())
+            .isNotNull()
+            .get { this.count() }
+            .isEqualTo(maxCollisionAttempts.toDouble())
         // TODO check logs emission
     }
 
@@ -144,4 +156,12 @@ class UrlServiceImplTest {
     }
 
     private fun randomUrlId() = UrlId(nextInt(1, 100))
+
+    private fun getCollisionCounter(): Counter? =
+        runCatching {
+            meterRegistry
+                .get("collision")
+                .tags("shortener", urlShortenerService.javaClass.simpleName)
+                .counter()
+        }.getOrNull()
 }
