@@ -26,6 +26,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("commons-validator:commons-validator:1.7")
+    implementation("commons-codec:commons-codec:1.17.1")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

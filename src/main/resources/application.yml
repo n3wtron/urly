@@ -10,3 +10,9 @@ spring:
         database-platform: org.hibernate.dialect.H2Dialect
         hibernate:
             ddl-auto: none
+
+urly:
+    shortener:
+        md5:
+            size: 10
+        max-collision-attempts: 10

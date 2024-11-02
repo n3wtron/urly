@@ -9,9 +9,9 @@ DDD + Hexagonal
 ## TODO
 - [X] Create Domain classes
 - [X] Create Service
-- [ ] Create a proper URLShortener algorithm
+- [X] Create a proper URLShortener algorithm
 - [X] Connect to DB
 - [X] Expose REST endpoints
-- [ ] Manage possible duplicates
+- [X] Manage possible duplicates
 - [ ] Add Metrics
 - [ ] Add Security

@@ -6,14 +6,14 @@ import org.igor.urly.domain.models.ShortUrl
 import org.igor.urly.domain.models.UrlId
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.ActiveProfiles
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import strikt.assertions.isNotNull
 
 @SpringBootTest
-@ActiveProfiles("integration-test")
+@AutoConfigureTestDatabase
 class JPAUrlRepositoryIT {
     @Autowired
     private lateinit var crudJPAUrlRepository: CrudJPAUrlRepository
