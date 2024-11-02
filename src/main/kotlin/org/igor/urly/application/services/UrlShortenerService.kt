@@ -12,7 +12,7 @@ interface UrlShortenerService {
 }
 
 @Service
-class UrlShortenerServiceImpl(
+class Md5UrlShortenerService(
     @Value("\${urly.shortener.md5.size}") private val size: Int,
 ) : UrlShortenerService {
     override fun shortIt(url: LongUrl): ShortUrl {
