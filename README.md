@@ -18,6 +18,12 @@ sjkahasXXs
 http://www.urlToShort.com
 ```
 
+# Shortener Algorithm
+Current implementation of `UrlShortenerService` is using `(MD5 digest + salt).take([size])` to shorting the original url.
+
+Using only the first `urly.shortener.md5.size` digits imply possible high collision rate, to mitigate that, a random `salt` is used combined with a retry mechanism in `UrlService`.
+
+
 # How to Contribute
 ## Directory structures & patterns ( DDD + Hexagonal )
 - `application/ports`: contains inbound/outbound ports (e.g. persistence)
