@@ -5,7 +5,7 @@ import org.igor.urly.domain.entities.UrlEntity
 import org.igor.urly.domain.models.ShortUrl
 
 interface UrlRepository {
-    fun save(url: NewUrlEntity): UrlEntity
+    fun save(newUrl: NewUrlEntity): UrlEntity
 
     fun get(shortUrl: ShortUrl): UrlEntity?
 }
